@@ -1,0 +1,12 @@
+{
+    "port": 3333,
+    "ERR": {
+        "File_Not_Found": {
+            "ERR_ID": "ERR_001",
+            "description": "The request file was not found"
+        }
+    },
+    "SUCCESS": {
+        "response": "success"
+    }
+}

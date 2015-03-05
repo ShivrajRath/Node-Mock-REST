@@ -1,0 +1,19 @@
+{
+    "name": "node-mock-rest",
+    "version": "1.0.0",
+    "description": "Application to host mock REST services for your project",
+    "main": "index.js",
+    "scripts": {
+        "prestart": "npm install",
+        "start": "node index.js"
+    },
+    "author": "@ShivrajRath",
+    "license": "ISC",
+    "dependencies": {
+        "express": "^4.12.2"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ShivrajRath/Node-Mock-REST.git"
+    }
+}
