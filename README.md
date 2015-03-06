@@ -1,7 +1,7 @@
 ## Node Mock REST App
 
 ### Description
-This application gives your project easy setup for mock services. It supports lazy response for GET methods
+This application gives your project easy setup for mock services. It supports lazy response for the services.
 
 ### Pre Requisite
 * Node JS
