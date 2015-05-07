@@ -13,6 +13,17 @@ var call_param = '/',
     delay = 0;
 
 /**
+* Allows access to all origin
+*/
+app.all("*", function(req, res, next){
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+ 
+    next();
+});
+ 
+/**
  * Returns a JSON service response by fetching the files in ./service folder
  */
 app.get('*', function(req, res) {
