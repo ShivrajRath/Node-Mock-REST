@@ -3,6 +3,12 @@
 ### Description
 This application gives your project easy setup for mock services. It supports lazy response for the services.
 
+Blog Post: [Novice Lab](http://novicelab.org)
+
+### Installation
+
+``npm install node-mock-rest``
+
 ### Pre Requisite
 * Node JS
 
@@ -12,9 +18,23 @@ This application gives your project easy setup for mock services. It supports la
 * If you want to run on different port run ``PORT=<new_port> npm start``
 
 ### How to use
-* GET/POST Request
-Put your json file inside service folder in same structure as of your request URL
-e.g: ``get/project/all`` would be get (folder) / project (folder) / all.json
+* GET
+
+  Put your json file inside service folder in same structure as of your request URL
+e.g: ``/profile/1234`` would be service / profile (folder) / 1234.json
 You don't need to restart the app
+
+
+* POST
+
+  Data in request body will be written to the file mentioned in the POST url. For e.g.: ``/profile/1234`` would create a file ``1234.json`` inside ``profile`` folder and write the request body to it. By default, the response would be a success. However, if you need a custom response, create a file ``postresp/1234.json``
+
+
 * Other Requests
 For requests like PUT/DELETE etc you'll allways get a success response
+
+
+### Limitations
+* Cannot create authentication scenarios
+* Adding or deleting data not possible currently
+* Limited to Content-Type ``application/json``
