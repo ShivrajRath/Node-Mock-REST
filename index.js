@@ -4,8 +4,20 @@
  * Creates an express app to manage mock response
  */
 
-var express = require('express');
+var express = require('express'),
+  fs = require('fs'),
+  path = require('path'),
+  bodyParser = require('body-parser');
+
 var app = express();
+
+// parse application/x-www-form-urlencoded 
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
+
+// parse application/json 
+app.use(bodyParser.json());
 
 var constants = require('./constants.json');
 
@@ -41,12 +53,39 @@ app.get('*', function (req, res) {
 });
 
 app.post('*', function (req, res) {
+  var path, respPath, x, y;
   try {
     call_param = req.params[0];
-    // Send file content as response
-    res.setHeader('Content-Type', 'application/json');
-    res.sendFile(__dirname + '/service' + call_param + '.json', {}, function (err) {
-      res.status(404).end(JSON.stringify(constants.ERR.File_Not_Found));
+
+    path = __dirname + '/service' + call_param + '.json';
+
+    /** finds the response path*/
+    x = call_param.split('/');
+    x[x.length - 1] = 'postresp/' + x[x.length - 1];
+    respPath = __dirname + '/service' + x.join('/') + '.json';
+
+    console.log(respPath);
+
+    fs.writeFile(path, JSON.stringify(req.body), function (err) {
+      if (err) {
+        if (err.code === 'ENOENT') {
+          res.status(500).end(JSON.stringify(constants.ERR.ENOENT));
+        } else {
+          res.status(500).end(err.toString());
+        }
+      } else {
+        console.log("Request body was saved! at " + path);
+
+        fs.exists(respPath, function (exists) {
+          if (exists) {
+            res.sendFile(respPath, {}, function (err) {
+              res.status(404).end(JSON.stringify(constants.ERR.File_Not_Found));
+            });
+          } else {
+            res.status(200).end(JSON.stringify(constants.SUCCESS));
+          }
+        });
+      }
     });
 
   } catch (ex) {
@@ -60,7 +99,6 @@ app.post('*', function (req, res) {
 app.all('*', function (req, res) {
   try {
     res.status(200).end(JSON.stringify(constants.SUCCESS));
-
   } catch (ex) {
     res.status(404).end(ex.message);
   }

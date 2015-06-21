@@ -1,12 +1,16 @@
 {
-    "port": 3333,
-    "ERR": {
-        "File_Not_Found": {
-            "ERR_ID": "ERR_001",
-            "description": "The request file was not found"
-        }
+  "port": 3333,
+  "ERR": {
+    "File_Not_Found": {
+      "ERR_ID": "ERR_001",
+      "description": "The request file was not found"
     },
-    "SUCCESS": {
-        "response": "success"
+    "ENOENT": {
+      "ERR_ID": "ERR_002",
+      "description": "Permission denined. Please create parent folder, if it doesn't exist"
     }
+  },
+  "SUCCESS": {
+    "response": "success"
+  }
 }
