@@ -1,6 +1,6 @@
 {
   "name": "node-mock-rest",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Application to host mock JSON REST services for your project",
   "main": "index.js",
   "scripts": {
