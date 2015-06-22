@@ -3,7 +3,7 @@
 ### Description
 This application gives your project easy setup for mock services. It supports lazy response for the services.
 
-Blog Post: [Novice Lab](http://novicelab.org)
+Blog Post: [Novice Lab](http://novicelab.org/project/stub-services-runner-in-node-js/535/)
 
 ### Installation
 
