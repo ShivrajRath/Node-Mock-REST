@@ -115,6 +115,7 @@ if (app.get('env')) {
   port = process.env.PORT || port;
 }
 
+// Starts the app
 app.listen(port, function () {
   console.log('App Started at port number ' + port);
 });
