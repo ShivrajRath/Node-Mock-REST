@@ -31,8 +31,12 @@ var call_param = '/',
  * Allows access to all origin
  */
 app.all("*", function (req, res, next) {
+
+  // Specify the origin if you want to control the CORS origin
   res.header('Access-Control-Allow-Origin', '*');
+
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+
   res.header('Access-Control-Allow-Headers', 'Content-Type');
 
   // Uncomment to allow with credentials. You'd need to give specific origin in that case

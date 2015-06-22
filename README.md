@@ -1,7 +1,7 @@
 ## Node Mock REST App
 
 ### Description
-This application gives your project easy setup for mock services. It supports lazy response for the services.
+This application gives your project easy setup for mock services.
 
 Blog Post: [Novice Lab](http://novicelab.org/project/stub-services-runner-in-node-js/535/)
 
@@ -33,6 +33,8 @@ You don't need to restart the app
 * Other Requests
 For requests like PUT/DELETE etc you'll allways get a success response
 
+* CORS
+It's enabled for all origin. You need to add specific domain to ``res.header('Access-Control-Allow-Origin', '*');`` to control.
 
 ### Limitations
 * Cannot create authentication scenarios
