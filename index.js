@@ -10,65 +10,41 @@ var express = require('express'),
   path = require('path'),
   bodyParser = require('body-parser');
 
-// Creates express app
-var app = express();
-
-// parse application/x-www-form-urlencoded 
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
-
-// parse application/json 
-app.use(bodyParser.json());
-
-// Constants for the application
+var defaultConfig = require('./config');
 var constants = require('./constants.json');
+var _ = require('lodash');
 
-var call_param = '/',
-  port = constants.port;
+module.exports = function(config, app){
+    if (!app) {
+      // merge the config with the default config
+      config = _.merge(defaultConfig, config);
+      console.log(config);
+      createApp(config);
+    }
+}
 
-/**
- * Allows access to all origin
- */
-app.all("*", function (req, res, next) {
-
-  // Specify the origin if you want to control the CORS origin
-  res.header('Access-Control-Allow-Origin', '*');
-
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-
-  // Uncomment to allow with credentials. You'd need to give specific origin in that case
-  //res.header('Access-Control-Allow-Credentials', true);
-  next();
-});
-
-/**
- * Returns a JSON service response by fetching the files in ./service folder
- */
-app.get('*', function (req, res) {
-  try {
-    call_param = req.params[0];
-    // Send file content as response
-    res.setHeader('Content-Type', 'application/json');
-    res.sendFile(__dirname + '/service' + call_param + '.json', {}, function (err) {
+function addGETStubs(config, app) {
+  app.get('*', function (req, res) {
+    try {
+      var call_param = req.params[0];
+      // Send file content as response
+      res.setHeader('Content-Type', 'application/json');
+      res.sendFile(__dirname + config.stub_dir + call_param + '.json', {}, function (err) {
       res.status(404).end(JSON.stringify(constants.ERR.File_Not_Found));
-    });
-  } catch (ex) {
-    res.status(404).end(ex.message);
-  }
-});
+      });
+    } catch (ex) {
+      res.status(404).end(ex.message);
+    }
+  });
+}
 
-/**
- * POST creates a file at the location, with the request body and returns response from postresp folder
- */
-app.post('*', function (req, res) {
+function addPOSTStubs(app) {
+  app.post('*', function (req, res) {
   var path, respPath, x, y;
   try {
-    call_param = req.params[0];
+    var call_param = req.params[0];
 
-    path = __dirname + '/service' + call_param + '.json';
+    path = __dirname + config.stub_dir + call_param + '.json';
 
     /** finds the response path*/
     x = call_param.split('/');
@@ -102,6 +78,37 @@ app.post('*', function (req, res) {
     res.status(404).end(ex.message);
   }
 });
+}
+
+function createApp(config) {
+
+  // Creates express app
+var app = express();
+
+// parse application/x-www-form-urlencoded 
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
+
+// parse application/json 
+app.use(bodyParser.json());
+
+/**
+ * Allows access to all origin
+ */
+app.all("*", function (req, res, next) {
+
+  // Specify the origin if you want to control the CORS origin
+  res.header('Access-Control-Allow-Origin', '*');
+
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+  // Uncomment to allow with credentials. You'd need to give specific origin in that case
+  //res.header('Access-Control-Allow-Credentials', true);
+  next();
+});
 
 /**
  * Sucess response for all non GET requests
@@ -115,11 +122,15 @@ app.all('*', function (req, res) {
 });
 
 // Run the application on the port 
+var port = config.server_port;
 if (app.get('env')) {
-  port = process.env.PORT || port;
+  port = process.env.PORT || config.server_port;
 }
 
 // Starts the app
 app.listen(port, function () {
   console.log('App Started at port number ' + port);
 });
+
+}
+
