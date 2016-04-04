@@ -11,10 +11,11 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.13.1",
-    "express": "^4.12.2"
+    "express": "^4.12.2",
+    "lodash": "4.7.0"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ShivrajRath/Node-Mock-REST.git"
+    "url": "https://github.com/abhishekbhardwaj84/Node-Mock-REST.git"
   }
 }
