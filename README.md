@@ -30,7 +30,7 @@ app - Express app instance.
 * GET
 
   Put your json file inside service folder in same structure as of your request URL
-e.g: ``/profile/1234`` would be service / stubService / profile (folder) / 1234.json
+e.g: ``stubService/profile/1234`` would be service / stubService / profile (folder) / 1234.json
 You don't need to restart the app
 
 
