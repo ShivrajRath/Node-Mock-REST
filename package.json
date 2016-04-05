@@ -1,6 +1,6 @@
 {
   "name": "node-mock-rest",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Application to host mock JSON REST services for your project",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.13.1",
-    "express": "^4.12.2"
+    "express": "^4.12.2",
+    "lodash": "4.7.0"
   },
   "repository": {
     "type": "git",
